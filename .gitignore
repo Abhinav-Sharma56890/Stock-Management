@@ -1,0 +1,7 @@
+node_modules/
+stock_portfolio.db
+*.log
+.env
+.env.*
+!.env.example
+cookies.txt

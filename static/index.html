@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>Vertex Invest Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css?v=20260429">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+<main class="shell">
+<div id="message" class="message hidden" role="alert" aria-live="polite"></div>
+<!-- AUTH -->
+<section id="auth-screen" class="auth-layout">
+<div class="brand-panel">
+<div class="brand-badge"><svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="rgba(255,255,255,0.12)"/><path d="M8 12h16M8 16h12M8 20h8" stroke="rgba(255,255,255,0.9)" stroke-width="2" stroke-linecap="round"/></svg><span>INVENTORY360</span></div>
+<h1>Retail Inventory<br>Management</h1>
+<p class="lead">Track stock levels, monitor sales trends, and optimize your supply chain from one intelligent dashboard.</p>
+<div class="market-visual" aria-hidden="true"><span style="height:34%"></span><span style="height:58%"></span><span style="height:44%"></span><span style="height:72%"></span><span style="height:51%"></span><span style="height:86%"></span><span style="height:63%"></span></div>
+<div class="feature-strip"><span>Secure Login</span><span>Inventory CRUD</span><span>Sales Analytics</span></div>
+</div>
+<div class="auth-panel">
+<div class="auth-card">
+<div class="auth-card__intro"><p class="eyebrow">Dashboard Access</p><h2>Welcome back.</h2><p class="muted">Sign in to your inventory dashboard and track stock, sales, and performance in one sleek workspace.</p></div>
+<div class="tabs" role="tablist"><button class="tab active" id="login-tab" type="button">Login</button><button class="tab" id="signup-tab" type="button">Signup</button></div>
+<form id="login-form" class="form stack" autocomplete="on">
+<label>Email<input name="email" type="email" autocomplete="username" autocapitalize="none" spellcheck="false" required placeholder="you@company.com"></label>
+<label>Password<input name="password" type="password" autocomplete="current-password" required placeholder="Enter your password"></label>
+<button class="primary-btn" type="submit">Login</button>
+<button class="ghost-btn" type="button" id="forgot-password-btn">Forgot password?</button>
+</form>
+<form id="forgot-password-form" class="form stack hidden" autocomplete="on">
+<label>Email<input name="email" type="email" autocomplete="username" autocapitalize="none" spellcheck="false" required placeholder="you@company.com"></label>
+<div class="form-actions"><button class="primary-btn" type="submit">Send OTP</button><button class="ghost-btn" type="button" id="cancel-forgot-password-btn">Back to login</button></div>
+</form>
+<form id="reset-password-form" class="form stack hidden">
+<input name="email" type="hidden">
+<label>OTP<input name="otp" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required placeholder="6-digit OTP"></label>
+<label>New Password<input name="new_password" type="password" minlength="6" required placeholder="Min 6 characters"></label>
+<label>Confirm Password<input name="confirm_password" type="password" minlength="6" required placeholder="Confirm new password"></label>
+<div class="form-actions"><button class="primary-btn" type="submit">Reset Password</button><button class="ghost-btn" type="button" id="cancel-reset-password-btn">Back to login</button></div>
+</form>
+<form id="signup-form" class="form stack hidden" autocomplete="on">
+<label>Name<input name="name" type="text" autocomplete="name" minlength="2" maxlength="40" required placeholder="Your full name"></label>
+<label>Email<input name="email" type="email" autocomplete="username" autocapitalize="none" spellcheck="false" required placeholder="you@company.com"></label>
+<label>Password<input name="password" type="password" autocomplete="new-password" minlength="6" required placeholder="Min 6 characters"></label>
+<button class="primary-btn" type="submit">Create Account</button>
+</form>
+<div class="divider"><span>or continue with</span></div>
+<div class="social-grid">
+<button type="button" class="social-btn google" data-provider="google">Continue with Google</button>
+<button type="button" class="social-btn github" data-provider="github">GitHub</button>
+<button type="button" class="social-btn apple" data-provider="apple">Apple</button>
+</div>
+<div class="explore-links" aria-label="Explore investing tools"><a href="/global-investing">Explore Global Investing</a><a href="/terminal">Try Trading Terminal</a></div>
+</div>
+</div>
+</section>
+
+<!-- APP -->
+<section id="app-screen" class="app-layout hidden">
+<aside class="sidebar">
+<div class="sidebar-brand">
+<div class="brand-icon"><svg width="28" height="28" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="rgba(255,255,255,0.1)"/><path d="M8 12h16M8 16h12M8 20h8" stroke="rgba(255,255,255,0.9)" stroke-width="2" stroke-linecap="round"/></svg></div>
+<div><p class="eyebrow">Private investing</p><h2>VERTEX INVEST</h2></div>
+</div>
+<nav class="nav-list" aria-label="Application sections">
+<button class="nav-link active" data-view="dashboard" type="button"><i data-lucide="layout-dashboard" class="lucide-nav"></i><span>Dashboard</span></button>
+<a class="nav-link nav-link--shortcut" href="/global-investing"><i data-lucide="globe-2" class="lucide-nav"></i><span>Global Markets</span><i data-lucide="arrow-up-right" class="nav-link__arrow"></i></a>
+<a class="nav-link nav-link--shortcut" href="/terminal"><i data-lucide="star" class="lucide-nav"></i><span>Watchlist</span><i data-lucide="arrow-up-right" class="nav-link__arrow"></i></a>
+<a class="nav-link nav-link--shortcut" href="/global-investing"><i data-lucide="book-open" class="lucide-nav"></i><span>Research</span><i data-lucide="arrow-up-right" class="nav-link__arrow"></i></a>
+<a class="nav-link nav-link--terminal" href="/terminal"><i data-lucide="chart-no-axes-combined" class="lucide-nav"></i><span>Terminal</span><i data-lucide="arrow-up-right" class="nav-link__arrow"></i></a>
+<button class="nav-link" data-view="portfolio" type="button"><i data-lucide="pie-chart" class="lucide-nav"></i><span>Portfolio</span></button>
+<button class="nav-link nav-link--shortcut" data-view="profile" type="button"><i data-lucide="settings-2" class="lucide-nav"></i><span>Settings</span></button>
+<p class="sidebar-section-label">Inventory operations</p>
+<button class="nav-link" data-view="transactions" type="button"><i data-lucide="arrow-left-right" class="lucide-nav"></i><span>Transactions</span></button>
+<button class="nav-link" data-view="inventory" type="button"><i data-lucide="package" class="lucide-nav"></i><span>Inventory</span></button>
+<button class="nav-link" data-view="catalog" type="button"><i data-lucide="boxes" class="lucide-nav"></i><span>Catalog</span></button>
+<button class="nav-link" data-view="sales" type="button"><i data-lucide="shopping-cart" class="lucide-nav"></i><span>Sales</span></button>
+<button class="nav-link" data-view="reports" type="button"><i data-lucide="file-text" class="lucide-nav"></i><span>Reports</span></button>
+<button class="nav-link" data-view="profile" type="button"><i data-lucide="user" class="lucide-nav"></i><span>Profile</span></button>
+</nav>
+<div class="sidebar-explore"><span><i data-lucide="shield-check" class="lucide-xs"></i> Delayed quotes · sandbox orders</span></div>
+<button id="logout-btn" class="sidebar-logout" type="button"><i data-lucide="log-out" class="lucide-nav"></i><span>Logout</span></button>
+</aside>
+
+<section class="workspace">
+<header class="topbar">
+<div class="topbar-left"><p class="eyebrow" id="welcome-label">Welcome</p><h2 id="view-title">Dashboard</h2></div>
+<div class="topbar-right">
+<button class="primary-btn compact" data-open-stock-form type="button"><i data-lucide="plus" class="lucide-sm"></i>Add Stock</button>
+<div class="avatar" id="user-avatar"></div>
+</div>
+</header>
+
+<!-- DASHBOARD -->
+<section id="dashboard-view" class="view vertex-dashboard" aria-live="polite">
+<header class="vertex-dashboard__intro">
+<div><p class="vertex-kicker"><span class="vertex-status-dot"></span><span id="dashboard-market-status">Market data delayed</span></p><h3 id="dash-greeting">Good evening.</h3><p>Here is your investing picture at a glance.</p></div>
+<p class="vertex-asof" id="dashboard-asof">Loading portfolio data…</p>
+</header>
+<section class="vertex-portfolio" aria-labelledby="portfolio-overview-title">
+<div class="vertex-portfolio__summary"><p class="vertex-label" id="portfolio-overview-title">Portfolio value</p><strong id="dash-portfolio-value">—</strong><div class="vertex-movement" id="dash-portfolio-movement"><i data-lucide="minus" class="lucide-xs"></i><span>Loading performance</span></div><dl><div><dt>Invested</dt><dd id="dash-invested-value">—</dd></div><div><dt>Holdings</dt><dd id="dash-holding-count">—</dd></div></dl></div>
+<div class="vertex-portfolio__chart"><div class="vertex-chart__head"><span>Value by holding</span><span>Snapshot</span></div><svg id="dash-performance-chart" viewBox="0 0 640 190" role="group" aria-label="Current portfolio value by holding"><g class="vertex-chart-grid"><path d="M0 36H640M0 76H640M0 116H640M0 156H640"/></g><g id="dash-performance-bars"></g></svg><small id="dash-chart-caption">Current value by holding; this is not price history.</small></div>
+</section>
+<div class="vertex-dashboard__grid">
+<section class="vertex-panel vertex-watchlist-panel" aria-labelledby="watchlist-title"><header><div><p class="vertex-label">Saved securities</p><h4 id="watchlist-title">Watchlist</h4></div><a href="/terminal">Open terminal <i data-lucide="arrow-up-right" class="lucide-xs"></i></a></header><div id="dash-watchlist" class="vertex-watchlist"><div class="vertex-state">Loading saved securities…</div></div></section>
+<section class="vertex-panel vertex-market-panel" aria-labelledby="market-overview-title"><header><div><p class="vertex-label">Broad market</p><h4 id="market-overview-title">Market overview</h4></div><a href="/global-investing">Explore <i data-lucide="arrow-up-right" class="lucide-xs"></i></a></header><div id="dash-market-overview" class="vertex-market-overview"><div class="vertex-state">Checking market feed…</div></div></section>
+<section class="vertex-panel vertex-activity-panel" aria-labelledby="recent-activity-title"><header><div><p class="vertex-label">Account history</p><h4 id="recent-activity-title">Recent activity</h4></div><button type="button" class="vertex-text-button" data-dashboard-view="transactions">View all</button></header><div id="dash-recent-activity" class="vertex-activity"><div class="vertex-state">Loading activity…</div></div></section>
+</div>
+</section>
+
+<!-- SALES -->
+<section id="sales-view" class="view hidden">
+<div class="bento-grid sales-bento">
+<article class="bento-card bento-kpi bento-kpi--revenue"><div class="kpi-header"><span class="kpi-label">Total Revenue</span><div class="kpi-icon"><i data-lucide="indian-rupee" class="lucide-sm"></i></div></div><strong class="kpi-value" id="sales-kpi-revenue">&#8377;0.00</strong></article>
+<article class="bento-card bento-kpi bento-kpi--units"><div class="kpi-header"><span class="kpi-label">Units Sold</span><div class="kpi-icon"><i data-lucide="package-check" class="lucide-sm"></i></div></div><strong class="kpi-value" id="sales-kpi-units">0</strong></article>
+<article class="bento-card bento-kpi bento-kpi--count"><div class="kpi-header"><span class="kpi-label">Sales Count</span><div class="kpi-icon"><i data-lucide="receipt" class="lucide-sm"></i></div></div><strong class="kpi-value" id="sales-kpi-count">0</strong></article>
+<article class="bento-card bento-kpi bento-kpi--avg"><div class="kpi-header"><span class="kpi-label">Avg Sale Value</span><div class="kpi-icon"><i data-lucide="calculator" class="lucide-sm"></i></div></div><strong class="kpi-value" id="sales-kpi-avg">&#8377;0.00</strong></article>
+<article class="bento-card bento-chart"><div class="chart-header"><h4>Sales Trend</h4><span class="chart-badge">Revenue</span></div><div class="chart-wrap"><canvas id="chart-sales-trend"></canvas></div></article>
+<article class="bento-card bento-chart"><div class="chart-header"><h4>Top Selling</h4><span class="chart-badge">By Revenue</span></div><div class="chart-wrap"><canvas id="chart-top-selling"></canvas></div></article>
+</div>
+<div class="section-heading"><h3>Recent Sales</h3><p class="section-sub">Latest transactions across all channels</p></div>
+<div class="table-wrap">
+<table><thead><tr><th>Date</th><th>Stock</th><th>Qty</th><th>Price</th><th>Amount</th></tr></thead><tbody id="recent-sales-body"></tbody></table>
+</div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio-view" class="view hidden">
+<div class="toolbar">
+<div class="toolbar-search"><i data-lucide="search" class="lucide-sm"></i><input id="search-input" type="search" placeholder="Search stocks by name"></div>
+<select id="filter-select" aria-label="Filter portfolio"><option value="all">All stocks</option><option value="profit">Profit only</option><option value="loss">Loss only</option><option value="neutral">No profit/loss</option></select>
+</div>
+<div id="portfolio-list" class="stock-grid"></div>
+</section>
+
+<!-- TRANSACTIONS -->
+<section id="transactions-view" class="view hidden">
+<div class="toolbar">
+<div class="toolbar-search"><i data-lucide="search" class="lucide-sm"></i><input id="transaction-search-input" type="search" placeholder="Search transactions by stock name"></div>
+<select id="transaction-type-select" aria-label="Filter transaction type"><option value="all">All transactions</option><option value="BUY">Buy only</option><option value="SELL">Sell only</option><option value="UPDATE">Update only</option><option value="DELETE">Delete only</option></select>
+</div>
+<div class="table-wrap">
+<table><thead><tr><th>Date</th><th>Stock</th><th>Type</th><th>Qty</th><th>Price</th><th>Amount</th></tr></thead><tbody id="transactions-body"></tbody></table>
+</div>
+</section>
+
+<!-- INVENTORY -->
+<section id="inventory-view" class="view hidden">
+<div class="toolbar">
+<div class="toolbar-search"><i data-lucide="search" class="lucide-sm"></i><input id="inventory-search-input" type="search" placeholder="Search inventory items or locations"></div>
+<button class="secondary-btn compact" data-open-inventory-form type="button"><i data-lucide="plus" class="lucide-sm"></i>Add Inventory</button>
+</div>
+<div class="bento-grid inventory-bento">
+<article class="bento-card bento-kpi"><div class="kpi-header"><span class="kpi-label">Total Inventory</span></div><strong class="kpi-value" id="total-inventory-count">0</strong></article>
+<article class="bento-card bento-kpi"><div class="kpi-header"><span class="kpi-label">In Transit</span></div><strong class="kpi-value" id="total-inventory-transit">0</strong></article>
+<article class="bento-card bento-kpi"><div class="kpi-header"><span class="kpi-label">Locations</span></div><strong class="kpi-value" id="total-inventory-locations">0</strong></article>
+</div>
+<div id="inventory-list" class="stock-grid"></div>
+</section>
+
+<!-- CATALOG -->
+<section id="catalog-view" class="view hidden">
+<div class="toolbar">
+<div class="toolbar-search"><i data-lucide="search" class="lucide-sm"></i><input id="catalog-search-input" type="search" placeholder="Search products by name, SKU or description"></div>
+<select id="catalog-category-select" aria-label="Filter by category"><option value="">All categories</option></select>
+<button class="secondary-btn compact" data-open-catalog-form type="button"><i data-lucide="plus" class="lucide-sm"></i>Add Product</button>
+</div>
+<div class="bento-grid catalog-bento">
+<article class="bento-card bento-kpi"><div class="kpi-header"><span class="kpi-label">Total Products</span></div><strong class="kpi-value" id="catalog-count">0</strong></article>
+<article class="bento-card bento-kpi"><div class="kpi-header"><span class="kpi-label">Categories</span></div><strong class="kpi-value" id="catalog-category-count">0</strong></article>
+</div>
+<div id="catalog-list" class="stock-grid"></div>
+</section>
+
+<!-- REPORTS -->
+<section id="reports-view" class="view hidden">
+<div class="bento-grid reports-bento">
+<article class="bento-card bento-kpi"><div class="kpi-header"><span class="kpi-label">Portfolio Turnover</span></div><strong class="kpi-value" id="report-portfolio-turnover">0.00x</strong></article>
+<article class="bento-card bento-kpi"><div class="kpi-header"><span class="kpi-label">Inventory Value</span></div><strong class="kpi-value" id="report-inventory-value">&#8377;0.00</strong></article>
+<article class="bento-card bento-kpi"><div class="kpi-header"><span class="kpi-label">Top Performer</span></div><strong class="kpi-value kpi-value--sm" id="report-top-performer">-</strong></article>
+<article class="bento-card bento-kpi"><div class="kpi-header"><span class="kpi-label">Worst Performer</span></div><strong class="kpi-value kpi-value--sm" id="report-worst-performer">-</strong></article>
+</div>
+<div class="report-section">
+<div class="section-heading"><h3>Stock Turnover</h3><p class="section-sub">Buy vs sell velocity by stock</p></div>
+<div class="table-wrap">
+<table class="turnover-table"><thead><tr><th>Stock</th><th>Holdings</th><th>Buy Qty</th><th>Sell Qty</th><th>Turnover Rate</th></tr></thead><tbody id="turnover-body"></tbody></table>
+</div>
+</div>
+<div class="report-grid">
+<div class="report-section">
+<div class="section-heading"><h3>Best Performers</h3><p class="section-sub">Top gainers this period</p></div>
+<div id="best-performers-list" class="performance-list"></div>
+</div>
+<div class="report-section">
+<div class="section-heading"><h3>Worst Performers</h3><p class="section-sub">Stocks needing attention</p></div>
+<div id="worst-performers-list" class="performance-list"></div>
+</div>
+</div>
+<div class="report-section">
+<div class="section-heading"><h3>Inventory Valuation</h3><p class="section-sub">Current value by location</p></div>
+<div class="table-wrap">
+<table><thead><tr><th>Item</th><th>Location</th><th>Quantity</th><th>Unit Price</th><th>Total Value</th></tr></thead><tbody id="inventory-valuation-body"></tbody></table>
+</div>
+</div>
+<div class="report-section">
+<div class="section-heading"><h3>Transaction Summary</h3><p class="section-sub">Breakdown by transaction type</p></div>
+<div id="transaction-summary" class="bento-grid tx-bento"></div>
+</div>
+<div class="report-section">
+<div class="section-heading"><h3>Category Breakdown</h3><p class="section-sub">Revenue distribution across sold catalog categories</p></div>
+<div id="category-breakdown" class="stock-grid"></div>
+</div>
+</section>
+
+<!-- PROFILE -->
+<section id="profile-view" class="view hidden profile-grid">
+<form id="profile-form" class="panel form stack">
+<div class="panel-header"><i data-lucide="user-cog" class="lucide-md"></i><h3>Edit Profile</h3></div>
+<label>Name<input name="name" type="text" minlength="2" maxlength="40" required></label>
+<label>Email<input name="email" type="email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Enter a valid email address."></label>
+<button class="primary-btn" type="submit">Save Profile</button>
+</form>
+<form id="password-form" class="panel form stack">
+<div class="panel-header"><i data-lucide="lock" class="lucide-md"></i><h3>Change Password</h3></div>
+<label>Current Password<input name="current_password" type="password" required></label>
+<label>New Password<input name="new_password" type="password" minlength="6" required></label>
+<button class="secondary-btn" type="submit">Change Password</button>
+</form>
+</section>
+</section>
+</section>
+</main>
+
+<!-- Additive public investing and terminal experiences are rendered by app.js. -->
+<section id="global-investing-page" class="invest-page hidden" aria-label="Global Investing"></section>
+<section id="terminal-page" class="terminal-page hidden" aria-label="Trading Terminal"></section>
+<section id="stock-detail-page" class="stock-detail-page hidden" aria-label="Stock detail"></section>
+
+<!-- DIALOGS -->
+<dialog id="inventory-dialog">
+<form id="inventory-form" class="form stack" method="dialog">
+<div class="dialog-title"><h3 id="inventory-dialog-title">Add Inventory</h3><button class="icon-btn" value="cancel" type="button" data-close-dialog aria-label="Close"><i data-lucide="x" class="lucide-sm"></i></button></div>
+<input name="id" type="hidden">
+<label>Item Name<input name="item_name" type="text" placeholder="Product A" required></label>
+<label>Location<input name="location_name" type="text" placeholder="Warehouse 1" required></label>
+<label>Quantity<input name="quantity" type="number" step="1" min="0" required></label>
+<label>In Transit<input name="in_transit_quantity" type="number" step="1" min="0" value="0"></label>
+<div class="form-actions"><button class="primary-btn" type="submit">Save Inventory</button><button class="ghost-btn" type="button" value="cancel" data-close-dialog>Cancel</button></div>
+</form>
+</dialog>
+
+<dialog id="catalog-dialog">
+<form id="catalog-form" class="form stack" method="dialog">
+<div class="dialog-title"><h3 id="catalog-dialog-title">Add Product</h3><button class="icon-btn" value="cancel" type="button" data-close-dialog aria-label="Close"><i data-lucide="x" class="lucide-sm"></i></button></div>
+<input name="id" type="hidden">
+<label>Product Name<input name="product_name" type="text" placeholder="Widget A" required></label>
+<label>SKU / Barcode<input name="sku" type="text" placeholder="WID-12345" required></label>
+<label>Description<textarea name="description" rows="3" placeholder="Product description"></textarea></label>
+<label>Unit Price<input name="unit_price" type="number" step="0.01" min="0" required></label>
+<label>Category<input name="category" type="text" placeholder="Electronics" required></label>
+<div class="form-actions"><button class="primary-btn" type="submit">Save Product</button><button class="ghost-btn" type="button" value="cancel" data-close-dialog>Cancel</button></div>
+</form>
+</dialog>
+
+<dialog id="stock-dialog">
+<form id="stock-form" class="form stack" method="dialog">
+<div class="dialog-title"><h3 id="stock-dialog-title">Add Stock</h3><button class="icon-btn" value="cancel" type="button" data-close-dialog aria-label="Close"><i data-lucide="x" class="lucide-sm"></i></button></div>
+<input name="id" type="hidden">
+<label>Stock Name<input id="stock-name-input" name="stock_name" type="text" placeholder="Reliance Industries" autocomplete="off" required><div id="stock-suggestions" class="stock-suggestions hidden" role="listbox" aria-label="Stock suggestions"></div></label>
+<input id="stock-symbol-input" name="stock_symbol" type="hidden">
+<label>Quantity<input name="quantity" type="number" step="0.01" min="0.01" required></label>
+<label>Buy Price<input id="buy-price-input" name="buy_price" type="number" step="0.01" min="0.01" required></label>
+<label>Current Price<input id="current-price-input" name="current_price" type="number" step="0.01" min="0" required></label>
+<button class="primary-btn" type="submit">Save Stock</button>
+
+</form>
+</dialog>
+
+<dialog id="sell-dialog">
+<form id="sell-form" class="form stack" method="dialog">
+<div class="dialog-title"><h3 id="sell-dialog-title">Sell Stock</h3><button class="icon-btn" value="cancel" type="button" data-close-dialog aria-label="Close"><i data-lucide="x" class="lucide-sm"></i></button></div>
+<input name="id" type="hidden">
+<p id="sell-stock-info" class="muted"></p>
+<label>Sell Quantity<input name="sell_quantity" type="number" step="0.01" min="0.01" required></label>
+<label>Sell Price<input name="sell_price" type="number" step="0.01" min="0.01" required></label>
+<button class="primary-btn" type="submit">Sell Stock</button>
+</form>
+</dialog>
+
+<script src="/app.js?v=20260429"></script>
+</body>
+</html>
